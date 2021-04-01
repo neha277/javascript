@@ -1,59 +1,58 @@
 'use strict';
-
-let correctNumber = Math.floor(Math.random() * 20);
-//document.querySelector('.number').textContent = correctNumber;  
-console.log(`correctNumber start ${correctNumber}`);                      
+let correctNumber = Math.floor(Math.random() * 20)+1;                   
 let highScore = 0;
 let intScore = 20;
 
+const messageClass = function(message){
+    document.querySelector('.message').textContent = message;
+} 
+const highScoreClass = function(score){
+    document.querySelector('.highscore').textContent= score;
+}
+
+const scoreClass = function(score){
+    document.querySelector('.score').textContent = score;
+}
+const numberClass = function(number){
+    document.querySelector('.number').textContent = number;
+}
+const bodyClass = function(val){
+    document.querySelector('body').style.backgroundColor = val;
+}
+const clearGuess = function(val){
+    document.querySelector('.guess').value = val;}
 
 document.querySelector('.check').addEventListener('click',function(){
-   
-    const guess = Number(document.querySelector('.guess').value);
+    let guess = Number(document.querySelector('.guess').value);
     if(guess === correctNumber){
-        document.querySelector('body').style.backgroundColor = 'lightpink';
-        console.log(`intScore check block ${intScore}`);
-        document.querySelector('.message').textContent = 'Correct number';
+        bodyClass('lightpink');
+        messageClass('Correct number');
         intScore = intScore + 1;
-        document.querySelector('.score').textContent = intScore;
+        scoreClass(intScore);
         if(highScore < intScore){
             highScore = intScore;
-            document.querySelector('.highscore').textContent = intScore;
-        }else{
-            document.querySelector('.highscore').textContent = highScore;
         }
+        highScoreClass(highScore);
+        
     }else{
-        if(guess > correctNumber){
-            document.querySelector('.message').textContent ='Number is greater';
+        guess > correctNumber ? messageClass('Number is greater') : messageClass('Number is low');
             intScore = intScore - 1;
-            document.querySelector('.score').textContent = intScore;
-            
-        }else if(guess < correctNumber){
-            document.querySelector('.message').textContent ='Number is low';
-            intScore = intScore - 1;
-            document.querySelector('.score').textContent = intScore;
-        }else if(guess === 0){
-            document.querySelector('.message').textContent = 'No number given';
-            intScore = intScore - 1;
-            document.querySelector('.score').textContent = intScore;
-    
-        }
+            scoreClass(intScore);
     }
+    clearGuess(null);
 
+})
 
 document.querySelector('.again').addEventListener('click',function(){
-    correctNumber = Math.floor(Math.random() * 20);
-    document.querySelector('.number').textContent = correctNumber; 
-    document.querySelector('.number').textContent = correctNumber; 
+    correctNumber = Math.floor(Math.random() * 20) +1;
+    numberClass(correctNumber); 
     intScore = 20;
-    document.querySelector('.message').textContent = 'Start guessing the number';
-    document.querySelector('.score').textContent = intScore;
-    document.querySelector('.guess').value = null;
-    document.querySelector('.highscore').textContent = highScore;
-    console.log(`correctNumberblock ${correctNumber}`);
-    document.querySelector('body').style.backgroundColor = '#222'
+    messageClass('Start guessing the number');
+    scoreClass(intScore);
+    clearGuess(null);
+    highScoreClass(highScore);
+    bodyClass('black');
 })
     
     
     
-})
